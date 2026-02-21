@@ -563,3 +563,53 @@ test에서부터 val 까지 다양하게 있는걸 볼 수 있다. 마찬가지�
 그 다음엔 Pre-train된 모델을 가져온다. option명에선 `--arch` 로 되어있다. 
 
 (26. 2. 21 ) 현재 구현해보고자 하는 것은 DataLoader까지이므로, main은 여기에서 일단 리뷰를 멈춘다. 
+-> 추가 리뷰. 실제 데이터를 로드하는건 train초반부에 있다. 여기까지 보자. 
+
+# train (data를 loading하기까지.)
+데이터를 로딩하는 부분까지 코드를 먼저 찾아보자. 
+
+
+# Preprocess 1. 
+
+```python   
+def train(epoch):
+    epoch_loss = 0
+    startIter = 1 # keep track of batch iter across subsets for logging
+
+    if opt.cacheRefreshRate > 0:
+        subsetN = ceil(len(train_set) / opt.cacheRefreshRate)
+        #TODO randomise the arange before splitting?
+        subsetIdx = np.array_split(np.arange(len(train_set)), subsetN)
+    else:
+        subsetN = 1
+        subsetIdx = [np.arange(len(train_set))]
+
+    nBatches = (len(train_set) + opt.batchSize - 1) // opt.batchSize
+
+    for subIter in range(subsetN):
+        print('====> Building Cache')
+        model.eval()
+        train_set.cache = join(opt.cachePath, train_set.whichSet + '_feat_cache.hdf5')
+        with h5py.File(train_set.cache, mode='w') as h5: 
+            pool_size = encoder_dim
+            if opt.pooling.lower() == 'netvlad': pool_size *= opt.num_clusters
+            h5feat = h5.create_dataset("features", 
+                    [len(whole_train_set), pool_size], 
+                    dtype=np.float32)
+            with torch.no_grad():
+                for iteration, (input, indices) in enumerate(whole_training_data_loader, 1):
+                    input = input.to(device)
+                    image_encoding = model.encoder(input)
+                    vlad_encoding = model.pool(image_encoding) 
+                    h5feat[indices.detach().numpy(), :] = vlad_encoding.detach().cpu().numpy()
+                    del input, image_encoding, vlad_encoding
+
+        sub_train_set = Subset(dataset=train_set, indices=subsetIdx[subIter])
+
+        training_data_loader = DataLoader(dataset=sub_train_set, num_workers=opt.threads, 
+                    batch_size=opt.batchSize, shuffle=True, 
+                    collate_fn=dataset.collate_fn, pin_memory=cuda)
+
+        print('Allocated:', torch.cuda.memory_allocated())
+        print('Cached:', torch.cuda.memory_cached())
+```
