@@ -205,7 +205,7 @@ def test(eval_set, epoch=0, write_tboard=False):
     print('====> Calculating recall @ N')
     n_values = [1,5,10,20]
 
-    _, predictions = faiss_index.search(qFeat, max(n_values)) 
+    predictions = faiss_index.search(qFeat, max(n_values)) 
 
     # for each query get those within threshold distance
     gt = eval_set.getPositives() 
