@@ -47,7 +47,7 @@ and the dataset specifications for the Pittsburgh dataset (available [here](http
 
 In order to initialise the NetVlad layer it is necessary to first run `main.py` with the correct settings and `--mode=cluster`. After which a model can be trained using (the following default flags):
 
-    python main.py --mode=train --arch=vgg16 --pooling=netvlad --num_clusters=64
+    python3 main.py --mode=train --arch=vgg16 --pooling=netvlad --num_clusters=64
 
 The commandline args, the tensorboard data, and the model state will all be saved to `opt.runsPath`, which subsequently can be used for testing, or to resuming training.
 
@@ -64,7 +64,7 @@ To test a previously trained model on the Pittsburgh 30k testset (replace direct
 The commandline arguments for training were saved, so we shouldnt need to specify them for testing.
 Additionally, to obtain the 'off the shelf' performance we can also omit the resume directory:
 
-    python main.py --mode=test
+    python3 main.py --mode=test
 
 ## Cluster
 

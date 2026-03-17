@@ -24,6 +24,12 @@ from tensorboardX import SummaryWriter
 import numpy as np
 import netvlad
 
+import warnings
+warnings.filterwarnings(
+    "ignore",
+    message="Loky-backed parallel loops cannot be called in a multiprocessing"
+)
+
 parser = argparse.ArgumentParser(description='pytorch-NetVlad')
 parser.add_argument('--mode', type=str, default='train', help='Mode', choices=['train', 'test', 'cluster'])
 parser.add_argument('--batchSize', type=int, default=4, 
@@ -44,8 +50,8 @@ parser.add_argument('--momentum', type=float, default=0.9, help='Momentum for SG
 parser.add_argument('--nocuda', action='store_true', help='Dont use cuda')
 parser.add_argument('--threads', type=int, default=8, help='Number of threads for each data loader to use')
 parser.add_argument('--seed', type=int, default=123, help='Random seed to use.')
-parser.add_argument('--dataPath', type=str, default='/nfs/ibrahimi/data/', help='Path for centroid data.')
-parser.add_argument('--runsPath', type=str, default='/nfs/ibrahimi/runs/', help='Path to save runs to.')
+parser.add_argument('--dataPath', type=str, default='../Netvlad_vanila/data', help='Path for centroid data.')
+parser.add_argument('--runsPath', type=str, default='../Netvlad_vanila/runs/', help='Path to save runs to.')
 parser.add_argument('--savePath', type=str, default='checkpoints', 
         help='Path to save checkpoints to in logdir. Default=checkpoints/')
 parser.add_argument('--cachePath', type=str, default=environ['TMPDIR'], help='Path to save cache to.')
@@ -205,7 +211,7 @@ def test(eval_set, epoch=0, write_tboard=False):
     print('====> Calculating recall @ N')
     n_values = [1,5,10,20]
 
-    predictions = faiss_index.search(qFeat, max(n_values)) 
+    distances, predictions = faiss_index.search(qFeat, max(n_values)) 
 
     # for each query get those within threshold distance
     gt = eval_set.getPositives() 
