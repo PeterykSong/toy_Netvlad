@@ -133,3 +133,32 @@ Module(
     positive_feature_distance_from_query=1.2573
     negative_idx=5150 descriptor_shape=(32768,) descriptor_head=[-0.0008,  0.0085,  0.0037, -0.0061,  0.0035, -0.0017, -0.003 ,  0.0027] (first of 10 negatives)
     negative_feature_distance_from_query=1.2566
+
+
+
+
+==> Epoch[1](25) Training triplet image ids
+    triplet[0] query_idx=676 query_image_id=001/001571_pitch1_yaw5 positive_idx=705 positive_image_id=000/000900_pitch1_yaw10 negative_indices=[9186, 5498, 3948, 9139, 1486, 3402, 291, 6788, 4194, 1762] negative_image_ids=['003/003714_pitch1_yaw3', '002/002363_pitch1_yaw11', '001/001895_pitch2_yaw9', '003/003639_pitch1_yaw4', '001/001147_pitch2_yaw11', '001/001732_pitch1_yaw3', '000/000637_pitch1_yaw4', '002/002665_pitch1_yaw5', '002/002010_pitch1_yaw3', '001/001269_pitch1_yaw11']
+    triplet[1] query_idx=610 query_image_id=001/001561_pitch1_yaw11 positive_idx=562 positive_image_id=000/000841_pitch1_yaw11 negative_indices=[1058, 336, 630, 634, 845, 647, 961, 6408, 347, 176] negative_image_ids=['001/001021_pitch1_yaw3', '000/000684_pitch1_yaw1', '000/000897_pitch1_yaw7', '000/000897_pitch1_yaw11', '000/000960_pitch1_yaw6', '000/000897_pitch2_yaw12', '001/001017_pitch1_yaw2', '002/002585_pitch1_yaw9', '000/000684_pitch1_yaw12', '000/000550_pitch1_yaw9']
+    triplet[2] query_idx=131 query_image_id=001/001415_pitch1_yaw12 positive_idx=200 positive_image_id=000/000592_pitch1_yaw9 negative_indices=[961, 1064, 1008, 432, 1060, 5559, 4213, 1076, 3742, 217] negative_image_ids=['001/001017_pitch1_yaw2', '001/001021_pitch1_yaw9', '001/001019_pitch1_yaw1', '000/000787_pitch1_yaw1', '001/001021_pitch1_yaw5', '002/002365_pitch2_yaw12', '002/002010_pitch2_yaw10', '001/001021_pitch2_yaw9', '001/001838_pitch1_yaw7', '000/000594_pitch1_yaw2']
+    triplet[3] query_idx=696 query_image_id=001/001584_pitch1_yaw1 positive_idx=888 positive_image_id=000/000962_pitch1_yaw1 negative_indices=[152, 1566, 1805, 131, 672, 7367, 2619, 1344, 1974, 8759] negative_image_ids=['000/000549_pitch1_yaw9', '001/001207_pitch1_yaw7', '001/001271_pitch1_yaw6', '000/000547_pitch1_yaw12', '000/000899_pitch1_yaw1', '002/002813_pitch1_yaw8', '001/001541_pitch1_yaw12', '001/001142_pitch1_yaw1', '001/001327_pitch1_yaw7', '003/003258_pitch1_yaw8']
+==> Epoch[1](25) First triplet debug
+    netvlad_alpha=375.720120
+    query_idx=676 utm=[ 584958.8247, 4477441.0476] descriptor_shape=(32768,) descriptor_head=[-0.0085, -0.0045,  0.0077, -0.0057, -0.0035,  0.0053,  0.0091, -0.0035]
+    positive_idx=705 descriptor_shape=(32768,) descriptor_head=[-0.0015,  0.0005, -0.0003, -0.0041, -0.0029,  0.0071,  0.0098,  0.0067]
+    positive_feature_distance_from_query=1.1140
+    negative_idx=9186 descriptor_shape=(32768,) descriptor_head=[-0.0078,  0.0019,  0.0077, -0.0144, -0.0022,  0.001 ,  0.0075,  0.0043] (first of 10 negatives)
+    negative_feature_distance_from_query=1.1939
+
+==> Epoch[1](25) Training triplet image ids
+    triplet[0] query_idx=676 query_image_id=001/001571_pitch1_yaw5 positive_idx=705 positive_image_id=000/000900_pitch1_yaw10 negative_indices=[9186, 5498, 3948, 9139, 1486, 3402, 291, 6788, 4194, 1762] negative_image_ids=['003/003714_pitch1_yaw3', '002/002363_pitch1_yaw11', '001/001895_pitch2_yaw9', '003/003639_pitch1_yaw4', '001/001147_pitch2_yaw11', '001/001732_pitch1_yaw3', '000/000637_pitch1_yaw4', '002/002665_pitch1_yaw5', '002/002010_pitch1_yaw3', '001/001269_pitch1_yaw11']
+    triplet[1] query_idx=610 query_image_id=001/001561_pitch1_yaw11 positive_idx=562 positive_image_id=000/000841_pitch1_yaw11 negative_indices=[1058, 336, 630, 634, 845, 647, 961, 6408, 347, 176] negative_image_ids=['001/001021_pitch1_yaw3', '000/000684_pitch1_yaw1', '000/000897_pitch1_yaw7', '000/000897_pitch1_yaw11', '000/000960_pitch1_yaw6', '000/000897_pitch2_yaw12', '001/001017_pitch1_yaw2', '002/002585_pitch1_yaw9', '000/000684_pitch1_yaw12', '000/000550_pitch1_yaw9']
+    triplet[2] query_idx=131 query_image_id=001/001415_pitch1_yaw12 positive_idx=200 positive_image_id=000/000592_pitch1_yaw9 negative_indices=[961, 1064, 1008, 432, 1060, 5559, 4213, 1076, 3742, 217] negative_image_ids=['001/001017_pitch1_yaw2', '001/001021_pitch1_yaw9', '001/001019_pitch1_yaw1', '000/000787_pitch1_yaw1', '001/001021_pitch1_yaw5', '002/002365_pitch2_yaw12', '002/002010_pitch2_yaw10', '001/001021_pitch2_yaw9', '001/001838_pitch1_yaw7', '000/000594_pitch1_yaw2']
+    triplet[3] query_idx=696 query_image_id=001/001584_pitch1_yaw1 positive_idx=888 positive_image_id=000/000962_pitch1_yaw1 negative_indices=[152, 1566, 1805, 131, 672, 7367, 2619, 1344, 1974, 8759] negative_image_ids=['000/000549_pitch1_yaw9', '001/001207_pitch1_yaw7', '001/001271_pitch1_yaw6', '000/000547_pitch1_yaw12', '000/000899_pitch1_yaw1', '002/002813_pitch1_yaw8', '001/001541_pitch1_yaw12', '001/001142_pitch1_yaw1', '001/001327_pitch1_yaw7', '003/003258_pitch1_yaw8']
+==> Epoch[1](25) First triplet debug
+    netvlad_alpha=375.720120
+    query_idx=676 utm=[ 584958.8247, 4477441.0476] descriptor_shape=(32768,) descriptor_head=[-0.0085, -0.0045,  0.0077, -0.0057, -0.0035,  0.0053,  0.0091, -0.0035]
+    positive_idx=705 descriptor_shape=(32768,) descriptor_head=[-0.0015,  0.0005, -0.0003, -0.0041, -0.0029,  0.0071,  0.0098,  0.0067]
+    positive_feature_distance_from_query=1.1140
+    negative_idx=9186 descriptor_shape=(32768,) descriptor_head=[-0.0078,  0.0019,  0.0077, -0.0144, -0.0022,  0.001 ,  0.0075,  0.0043] (first of 10 negatives)
+    negative_feature_distance_from_query=1.1939

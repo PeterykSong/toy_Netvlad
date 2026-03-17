@@ -2,7 +2,7 @@ from __future__ import print_function
 import argparse
 from math import log10, ceil
 import random, shutil, json
-from os.path import join, exists, isfile, realpath, dirname
+from os.path import join, exists, isfile, realpath, dirname, splitext
 from os import makedirs, remove, chdir, environ
 
 import torch
@@ -54,7 +54,7 @@ parser.add_argument('--dataPath', type=str, default='../Netvlad_vanila/data', he
 parser.add_argument('--runsPath', type=str, default='../Netvlad_vanila/runs/', help='Path to save runs to.')
 parser.add_argument('--savePath', type=str, default='checkpoints', 
         help='Path to save checkpoints to in logdir. Default=checkpoints/')
-parser.add_argument('--cachePath', type=str, default=environ['TMPDIR'], help='Path to save cache to.')
+parser.add_argument('--cachePath', type=str, default=environ.get('TMPDIR', '/tmp'), help='Path to save cache to.')
 parser.add_argument('--resume', type=str, default='', help='Path to load checkpoint from, for resuming training or testing.')
 parser.add_argument('--ckpt', type=str, default='latest', 
         help='Resume from latest or best checkpoint.', choices=['latest', 'best'])
@@ -125,14 +125,62 @@ def get_netvlad_alpha(current_model):
     return getattr(pool_module, 'alpha', None)
 
 def get_query_db_indices(flattened_indices, neg_counts, sample_idx=0):
-    offset = 0
-    for current_idx in range(sample_idx):
-        offset += 2 + int(neg_counts[current_idx].item())
+    triplet_indices = get_triplet_indices(flattened_indices, neg_counts)
+    if sample_idx >= len(triplet_indices):
+        raise IndexError('sample_idx {} out of range for {} triplets'.format(
+            sample_idx, len(triplet_indices)))
 
-    query_index = int(flattened_indices[offset])
-    positive_index = int(flattened_indices[offset + 1])
-    first_negative_index = int(flattened_indices[offset + 2])
+    query_index, positive_index, negative_indices = triplet_indices[sample_idx]
+    first_negative_index = negative_indices[0]
     return query_index, positive_index, first_negative_index
+
+def get_triplet_indices(flattened_indices, neg_counts):
+    triplet_indices = []
+    offset = 0
+
+    for neg_count in neg_counts:
+        neg_count = int(neg_count.item())
+        sample_indices = flattened_indices[offset:offset + 2 + neg_count]
+        if len(sample_indices) < 2 + neg_count:
+            break
+
+        query_index = int(sample_indices[0])
+        positive_index = int(sample_indices[1])
+        negative_indices = [int(idx) for idx in sample_indices[2:]]
+        triplet_indices.append((query_index, positive_index, negative_indices))
+        offset += 2 + neg_count
+
+    return triplet_indices
+
+def format_image_id(image_path):
+    return splitext(str(image_path))[0]
+
+def print_training_triplet_ids(epoch, iteration, flattened_indices, neg_counts):
+    triplet_indices = get_triplet_indices(flattened_indices, neg_counts)
+    if not triplet_indices:
+        return
+
+    print('==> Epoch[{}]({}) Training triplet image ids'.format(epoch, iteration), flush=True)
+    for triplet_idx, (query_index, positive_index, negative_indices) in enumerate(triplet_indices):
+        query_image_id = format_image_id(train_set.dbStruct.qImage[query_index])
+        positive_image_id = format_image_id(train_set.dbStruct.dbImage[positive_index])
+        negative_image_ids = [
+            format_image_id(train_set.dbStruct.dbImage[negative_index])
+            for negative_index in negative_indices
+        ]
+
+        print(
+            '    triplet[{}] query_idx={} query_image_id={} positive_idx={} positive_image_id={} negative_indices={} negative_image_ids={}'.format(
+                triplet_idx,
+                query_index,
+                query_image_id,
+                positive_index,
+                positive_image_id,
+                negative_indices,
+                negative_image_ids,
+            ),
+            flush=True,
+        )
 
 def print_first_triplet_debug(epoch, iteration, flattened_indices, neg_counts, vlad_q, vlad_p, vlad_n):
     if len(flattened_indices) < 3 or vlad_q.size(0) == 0 or vlad_p.size(0) == 0 or vlad_n.size(0) == 0:
@@ -229,6 +277,7 @@ def train(epoch):
             vlad_encoding = model.pool(image_encoding) 
 
             vladQ, vladP, vladN = torch.split(vlad_encoding, [B, B, nNeg])
+            print_training_triplet_ids(epoch, iteration, indices, negCounts)
             print_first_triplet_debug(epoch, iteration, indices, negCounts, vladQ, vladP, vladN)
 
             optimizer.zero_grad()
