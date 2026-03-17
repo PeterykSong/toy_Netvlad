@@ -301,6 +301,7 @@ class L2Norm(nn.Module):
         return F.normalize(input, p=2, dim=self.dim)
 
 if __name__ == "__main__":
+    f = open("log.txt","w")
     opt = parser.parse_args()
 
     restore_var = ['lr', 'lrStep', 'lrGamma', 'weightDecay', 'momentum', 

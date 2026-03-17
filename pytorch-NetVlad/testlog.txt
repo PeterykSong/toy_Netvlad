@@ -1,0 +1,135 @@
+`weights=VGG16_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+===> Run Configuration
+  mode: train
+  dataset: pittsburgh
+  split: val
+  arch: vgg16
+  pooling: netvlad
+  num_clusters: 64
+  batchSize: 4
+  cacheBatchSize: 24
+  cacheRefreshRate: 1000
+  nEpochs: 30
+  optim: SGD
+  lr: 0.0001
+  lrStep: 5
+  lrGamma: 0.5
+  momentum: 0.9
+  weightDecay: 0.001
+  margin: 0.1
+  threads: 8
+  seed: 123
+  resume: None
+  device: cuda
+===> Model Structure
+Module(
+  (encoder): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+    (4): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (5): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (6): ReLU(inplace=True)
+    (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (8): ReLU(inplace=True)
+    (9): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (10): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (11): ReLU(inplace=True)
+    (12): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (13): ReLU(inplace=True)
+    (14): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (15): ReLU(inplace=True)
+    (16): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (17): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (18): ReLU(inplace=True)
+    (19): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (20): ReLU(inplace=True)
+    (21): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (22): ReLU(inplace=True)
+    (23): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (24): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (25): ReLU(inplace=True)
+    (26): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (27): ReLU(inplace=True)
+    (28): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+  (pool): NetVLAD(
+    (conv): Conv2d(512, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  )
+)
+
+
+==> Epoch[1](4) First triplet debug
+    query_idx=820 utm=[ 584939.7323, 4477496.3833] descriptor_shape=(32768,) descriptor_head=[ 0.0153,  0.002 ,  0.0061, -0.0012, -0.0066,  0.005 ,  0.0033, -0.0066]
+    positive_idx=1758 utm=[ 584940.6391, 4477499.4354] descriptor_shape=(32768,) descriptor_head=[ 0.0178,  0.0062,  0.0018,  0.0041, -0.0024,  0.0087, -0.0067, -0.0008]
+    negative_idx=6913 utm=[ 584607.9278, 4477436.9422] descriptor_shape=(32768,) descriptor_head=[ 0.0062,  0.0065,  0.0029, -0.0005, -0.0096, -0.005 ,  0.0055, -0.006 ] (first of 10 negatives)
+==> Epoch[1](5) First triplet debug
+    query_idx=489 utm=[ 584974.6116, 4477410.1977] descriptor_shape=(32768,) descriptor_head=[ 0.0111, -0.0002,  0.0095, -0.0008,  0.0076, -0.0011,  0.0079,  0.0017]
+    positive_idx=345 utm=[ 584978.4699, 4477402.0597] descriptor_shape=(32768,) descriptor_head=[ 0.011 ,  0.0004,  0.0019, -0.0026, -0.0011,  0.0077,  0.0046, -0.0091]
+    negative_idx=848 utm=[ 584898.379, 4477426.463] descriptor_shape=(32768,) descriptor_head=[ 0.0052, -0.0041,  0.0056, -0.0033, -0.005 , -0.0093,  0.0018, -0.0095] (first of 10 negatives)
+==> Epoch[1](6) First triplet debug
+    query_idx=299 utm=[ 585015.267 , 4477420.4951] descriptor_shape=(32768,) descriptor_head=[-0.0013,  0.0008,  0.0079,  0.0006, -0.0011, -0.0044,  0.0005,  0.0022]
+    positive_idx=149 utm=[ 585017.2518, 4477415.2666] descriptor_shape=(32768,) descriptor_head=[ 0.002 , -0.0017,  0.0052,  0.0075, -0.0069,  0.0035, -0.0014,  0.0099]
+    negative_idx=1207 utm=[ 585001.7587, 4477465.0478] descriptor_shape=(32768,) descriptor_head=[-8.5793e-06,  1.6513e-03,  2.8539e-03,  1.7203e-03, -7.5335e-03,
+  3.7579e-04, -3.1635e-03, -7.1943e-03] (first of 10 negatives)
+==> Epoch[1](7) First triplet debug
+    query_idx=873 utm=[ 584936.1418, 4477506.3451] descriptor_shape=(32768,) descriptor_head=[-0.0046, -0.0039,  0.0007,  0.0036, -0.0072,  0.0127,  0.001 , -0.0055]
+    positive_idx=1762 utm=[ 584940.6391, 4477499.4354] descriptor_shape=(32768,) descriptor_head=[-0.0028, -0.0058, -0.0006,  0.0042, -0.0091, -0.0029,  0.0014, -0.0021]
+    negative_idx=7802 utm=[ 584562.1928, 4477303.318 ] descriptor_shape=(32768,) descriptor_head=[-7.0682e-03, -3.4164e-03,  7.2033e-03, -8.2825e-05,  3.0698e-04,
+ -6.2256e-03,  6.5032e-03,  3.7831e-04] (first of 10 negatives)
+==> Epoch[1](8) First triplet debug
+    query_idx=6 utm=[ 585089.3603, 4477427.5756] descriptor_shape=(32768,) descriptor_head=[ 0.0053, -0.0031, -0.0009,  0.0038, -0.0039,  0.0057,  0.0005, -0.0004]
+    positive_idx=29 utm=[ 585091.3364, 4477434.3145] descriptor_shape=(32768,) descriptor_head=[-0.0043, -0.0022,  0.0089,  0.0063, -0.0074, -0.0001,  0.0105, -0.0024]
+    negative_idx=991 utm=[ 585012.6547, 4477469.0571] descriptor_shape=(32768,) descriptor_head=[-0.0005,  0.0037,  0.011 , -0.0031, -0.0009, -0.0142,  0.0053, -0.0069] (firs
+
+
+
+     Epoch[1](1) First triplet debug
+    query_idx=606 utm=[ 584962.3222, 4477432.5612] descriptor_shape=(32768,) descriptor_head=[ 0.0003,  0.001 ,  0.0039,  0.0034,  0.0076,  0.0031, -0.0016, -0.0023]
+    positive_idx=558 descriptor_shape=(32768,) descriptor_head=[ 0.0005,  0.0027,  0.001 , -0.0062,  0.0015,  0.0017,  0.0051,  0.0039]
+    positive_distance_from_query=2.8368
+    negative_idx=8447 descriptor_shape=(32768,) descriptor_head=[-0.0019,  0.0008,  0.0029, -0.0042,  0.0005, -0.0082, -0.0038, -0.0041] (first of 10 negatives)
+    negative_distance_from_query=421.8141
+==> Epoch[1](2) First triplet debug
+    query_idx=135 utm=[ 585064.3558, 4477435.0516] descriptor_shape=(32768,) descriptor_head=[-0.0072, -0.0049,  0.0089, -0.0028,  0.0063, -0.0024, -0.0045, -0.0055]
+    positive_idx=135 descriptor_shape=(32768,) descriptor_head=[-0.0016, -0.007 ,  0.0025,  0.0003,  0.0049,  0.0081,  0.0012, -0.0033]
+    positive_distance_from_query=9.9426
+    negative_idx=9151 descriptor_shape=(32768,) descriptor_head=[-0.0114,  0.0015,  0.0021, -0.0021, -0.0037, -0.0039, -0.0014,  0.0015] (first of 10 negatives)
+    negative_distance_from_query=540.1606
+==> Epoch[1](3) First triplet debug
+    query_idx=332 utm=[ 585005.7958, 4477417.9897] descriptor_shape=(32768,) descriptor_head=[-1.4803e-03, -6.1340e-05,  3.2432e-03,  3.1393e-03,  1.0150e-04,
+ -1.7914e-03, -8.7638e-03,  5.6008e-04]
+    positive_idx=234 descriptor_shape=(32768,) descriptor_head=[-0.0085,  0.002 , -0.0033, -0.0013, -0.0039, -0.0064, -0.0102, -0.0008]
+    positive_distance_from_query=6.2914
+    negative_idx=3605 descriptor_shape=(32768,) descriptor_head=[-0.002 , -0.0023,  0.008 , -0.0053, -0.0093, -0.0097,  0.0012, -0.0025] (first of 10 negatives)
+    negative_distance_from_query=208.4515
+==> Epoch[1](4) First triplet debug
+
+
+
+==> Epoch[1](20) First triplet debug
+    query_idx=220 utm=[ 585042.3476, 4477428.1407] descriptor_shape=(32768,) descriptor_head=[-0.0038, -0.0004,  0.0037, -0.0025, -0.0013, -0.0035,  0.0026, -0.0123]
+    positive_idx=178 descriptor_shape=(32768,) descriptor_head=[ 0.0095, -0.0009,  0.012 , -0.0046,  0.0057,  0.0153,  0.0008,  0.0026]
+    positive_feature_distance_from_query=1.2516
+    negative_idx=2439 descriptor_shape=(32768,) descriptor_head=[-0.0055, -0.0015,  0.0009, -0.0045,  0.0049,  0.0025, -0.0004, -0.0028] (first of 10 negatives)
+    negative_feature_distance_from_query=1.2083
+==> Epoch[1](21) First triplet debug
+    query_idx=886 utm=[ 584936.1418, 4477506.3451] descriptor_shape=(32768,) descriptor_head=[-0.0016, -0.0014,  0.0029,  0.0016, -0.0152, -0.0101,  0.0037, -0.0021]
+    positive_idx=1774 descriptor_shape=(32768,) descriptor_head=[-0.0043, -0.004 ,  0.0081, -0.0018, -0.009 , -0.0058,  0.0071,  0.0005]
+    positive_feature_distance_from_query=1.1053
+    negative_idx=290 descriptor_shape=(32768,) descriptor_head=[-0.0021, -0.0041, -0.0009, -0.0015,  0.0024, -0.0079,  0.0027, -0.0006] (first of 10 negatives)
+    negative_feature_distance_from_query=1.2457
+==> Epoch[1](22) First triplet debug
+    query_idx=267 utm=[ 585026.0737, 4477423.4154] descriptor_shape=(32768,) descriptor_head=[-0.0007, -0.0066, -0.002 , -0.0015,  0.0101, -0.0067, -0.0058, -0.0067]
+    positive_idx=105 descriptor_shape=(32768,) descriptor_head=[ 0.0076, -0.0025,  0.0104, -0.0028,  0.0065,  0.0081, -0.0086, -0.0064]
+    positive_feature_distance_from_query=1.2877
+    negative_idx=849 descriptor_shape=(32768,) descriptor_head=[ 0.0068, -0.0035,  0.0096,  0.0016,  0.0008,  0.0054, -0.0066, -0.0094] (first of 10 negatives)
+    negative_feature_distance_from_query=1.2103
+==> Epoch[1](23) First triplet debug
+    query_idx=45 utm=[ 585085.8931, 4477435.6293] descriptor_shape=(32768,) descriptor_head=[-0.0017, -0.0069,  0.0098,  0.0027,  0.0071, -0.0001, -0.0047, -0.0048]
+    positive_idx=89 descriptor_shape=(32768,) descriptor_head=[ 0.0078,  0.0031,  0.0013, -0.0021, -0.0036,  0.0065,  0.0072, -0.0072]
+    positive_feature_distance_from_query=1.2573
+    negative_idx=5150 descriptor_shape=(32768,) descriptor_head=[-0.0008,  0.0085,  0.0037, -0.0061,  0.0035, -0.0017, -0.003 ,  0.0027] (first of 10 negatives)
+    negative_feature_distance_from_query=1.2566
